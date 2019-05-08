@@ -3,4 +3,5 @@
  * @author - huang.jian <hjj491229492@hotmail.com>
  */
 
-export { default } from './NetworkHints';
+// eslint-disable-next-line import/prefer-default-export
+export { default as NetworkHintsPlugin } from './NetworkHints';
