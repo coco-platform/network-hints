@@ -1,0 +1,17 @@
+parser: babel-eslint
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
+  ecmaFeatures:
+    jsx: true
+env:
+  browser: true
+  jest: true
+extends:
+  - 'eslint:recommended'
+  - 'airbnb-base'
+  - 'prettier'
+rules:
+  linebreak-style:
+    - error
+    - unix
