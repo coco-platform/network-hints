@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tools suits should create prefetch tag 1`] = `
+Object {
+  "attributes": Object {
+    "href": "/hello.jpg",
+    "rel": "prefetch",
+  },
+  "selfClosingTag": false,
+  "tagName": "link",
+  "voidTag": true,
+}
+`;

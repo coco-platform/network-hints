@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`plugin test suits should complete standard workflow 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+  <head>
+    <meta charset=\\"UTF-8\\" />
+    <title>Jest</title>
+  <link rel=\\"prefetch\\" href=\\"/static/media/david-marcu-114194-unsplash.bae2dd1f.jpg\\"><link rel=\\"prefetch\\" href=\\"/static/media/eberhard-grossgasteiger-1482753-unsplash.2e01ec1b.jpg\\"><link rel=\\"prefetch\\" href=\\"/static/media/fezbot2000-278419-unsplash.8821deb8.jpg\\"></head>
+  <body><script type=\\"text/javascript\\" src=\\"/main.js\\"></script></body>
+</html>
+"
+`;

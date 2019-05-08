@@ -36,6 +36,7 @@ class NetworkHints {
             )
             .map((asset) => resolve(publicPath, asset))
             .map((asset) => createPrefetchTags(asset));
+
           const payload = {
             ...html,
             head: [...html.head, ...prefetch],

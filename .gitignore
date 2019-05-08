@@ -43,6 +43,4 @@ jspm_packages
 # Production
 /dist
 /lib
-/native
-/__tests__/*.js
 
