@@ -14,7 +14,7 @@ import { NetworkHintsPlugin } from '../src';
 const mfs = Reflect.construct(MemoryFS, []);
 
 describe('plugin test suits', () => {
-  it('should complete standard workflow', (done) => {
+  it('should complete standard workflow --> prefetch', (done) => {
     const configuration = {
       entry: resolve(__dirname, '__fixture__', 'index.js'),
       resolve: {
@@ -47,6 +47,62 @@ describe('plugin test suits', () => {
         }),
         new NetworkHintsPlugin({
           prefetch: ['*.jpg'],
+        }),
+      ],
+    };
+
+    const compiler = webpack(configuration);
+    const outputPath = `${configuration.output.path}/index.html`;
+
+    compiler.inputFileSystem = fs;
+    compiler.outputFileSystem = mfs;
+
+    compiler.run((err) => {
+      try {
+        const content = mfs.readFileSync(outputPath, 'utf8');
+
+        expect(err).toBeNull();
+        expect(content).toMatchSnapshot();
+        done();
+      } catch (error) {
+        done(error);
+      }
+    });
+  });
+
+  it('should complete standard workflow --> preload', (done) => {
+    const configuration = {
+      entry: resolve(__dirname, '__fixture__', 'index.js'),
+      resolve: {
+        extensions: ['.js', '.jpg'],
+      },
+      output: {
+        path: resolve(process.cwd(), 'dist'),
+        filename: '[name].js',
+        publicPath: '/',
+      },
+      module: {
+        rules: [
+          {
+            test: /\.jpg$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  name: 'static/media/[name].[hash:8].[ext]',
+                },
+              },
+            ],
+          },
+        ],
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          template: resolve(__dirname, '__fixture__', 'index.html'),
+          inject: 'body',
+        }),
+        new NetworkHintsPlugin({
+          preload: ['*.jpg'],
         }),
       ],
     };

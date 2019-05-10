@@ -5,9 +5,10 @@
 
 // packages
 import { resolve } from 'url';
-
 import { match } from 'minimatch';
-import { createPrefetchTags } from './tools';
+import { createPrefetchTags, createPreloadTags } from './tools';
+import preloadAttrAlgorithm from './preload';
+
 // scope
 const defaultOptions = {
   prefetch: [],
@@ -36,10 +37,20 @@ class NetworkHints {
             )
             .map((asset) => resolve(publicPath, asset))
             .map((asset) => createPrefetchTags(asset));
+          const preload = this.options.preload
+            .reduce(
+              (acc, pattern) => [
+                ...acc,
+                ...match(assets, pattern, { matchBase: true }),
+              ],
+              []
+            )
+            .map((asset) => resolve(publicPath, asset))
+            .map((asset) => createPreloadTags(asset, preloadAttrAlgorithm));
 
           const payload = {
             ...html,
-            head: [...html.head, ...prefetch],
+            head: [...html.head, ...prefetch, ...preload],
           };
 
           callback(null, payload);
