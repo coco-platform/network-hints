@@ -1,5 +1,5 @@
 {
-  "name": "@coco-platform/network-hints",
+  "name": "@coco-platform/webpack-plugin-network-hints",
   "version": "0.4.0",
   "description": "Inject network hints automatic, cooperate with html-webpack-plugin.",
   "main": "lib/index.js",

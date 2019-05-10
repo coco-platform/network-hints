@@ -21,13 +21,13 @@ node >= 10.0.0
 Install the plugin with npm:
 
 ```shell
-$ npm install --save-dev @coco-platform/network-hints
+$ npm install --save-dev @coco-platform/webpack-plugin-network-hints
 ```
 
 Install the plugin with yarn:
 
 ```shell
-$ yarn add --dev @coco-platform/network-hints
+$ yarn add --dev @coco-platform/webpack-plugin-network-hints
 ```
 
 ## Usage
@@ -35,7 +35,9 @@ $ yarn add --dev @coco-platform/network-hints
 Load the plugin:
 
 ```javascript
-const { NetworkHintsPlugin } = require('resource-hints-webpack-plugin');
+const {
+  NetworkHintsPlugin,
+} = require('@coco-platform/webpack-plugin-network-hints');
 ```
 
 and add it to your webpack config as follow:
