@@ -15,8 +15,7 @@
     "compile": "babel src --source-maps --out-dir lib --copy-files"
   },
   "files": [
-    "lib",
-    "native"
+    "lib"
   ],
   "repository": {
     "type": "git",
