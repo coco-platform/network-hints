@@ -21,3 +21,18 @@ export function createPrefetchTags(asset) {
     },
   };
 }
+
+/**
+ * @description - create preload tags
+ *
+ * @param {string} asset
+ * @param {function} algorithm - calculate preload additional attributes
+ */
+export function createPreloadTags(asset, algorithm) {
+  return {
+    tagName: 'link',
+    selfClosingTag: false,
+    voidTag: true,
+    attributes: algorithm(asset),
+  };
+}

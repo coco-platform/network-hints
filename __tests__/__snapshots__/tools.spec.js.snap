@@ -11,3 +11,15 @@ Object {
   "voidTag": true,
 }
 `;
+
+exports[`tools suits should create preload tag 1`] = `
+Object {
+  "attributes": Object {
+    "as": "font",
+    "crossorigin": "anonymous",
+  },
+  "selfClosingTag": false,
+  "tagName": "link",
+  "voidTag": true,
+}
+`;
