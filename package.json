@@ -9,6 +9,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm-run-all -s compile",
+    "pretest": "yarn add html-webpack-plugin --peer",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "precompile": "rm -rf lib",
