@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tools suits should preload document 1`] = `
+Object {
+  "as": "document",
+  "href": "jest.chunk.html",
+  "rel": "preload",
+  "type": "text/html",
+}
+`;
+
+exports[`tools suits should preload fonts 1`] = `
+Object {
+  "as": "font",
+  "crossorigin": "anonymous",
+  "href": "jest.chunk.woff2",
+  "rel": "preload",
+  "type": "font/woff2",
+}
+`;
+
+exports[`tools suits should preload images 1`] = `
+Object {
+  "as": "image",
+  "href": "jest.chunk.jpg",
+  "rel": "preload",
+  "type": "image/jpeg",
+}
+`;
+
+exports[`tools suits should preload scripts 1`] = `
+Object {
+  "as": "script",
+  "href": "jest.chunk.js",
+  "rel": "preload",
+  "type": "application/javascript",
+}
+`;
+
+exports[`tools suits should preload stylesheets 1`] = `
+Object {
+  "as": "stylesheet",
+  "href": "jest.chunk.css",
+  "onload": "this.rel='stylesheet'",
+  "rel": "preload",
+  "type": "text/css",
+}
+`;
