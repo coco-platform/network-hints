@@ -62,7 +62,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-import": "^2.16.0",
-    "file-loader": "^3.0.1",
+    "file-loader": "^4.0.0",
     "husky": "^2.3.0",
     "jest": "^24.1.0",
     "memory-fs": "^0.4.1",
