@@ -47,7 +47,7 @@
     "@babel/core": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
     "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.0.0",
+    "@commitlint/config-conventional": "^8.3.4",
     "@types/jest": "^25.1.2",
     "@types/mime-types": "^2.1.0",
     "@types/minimatch": "^3.0.3",
