@@ -6,7 +6,6 @@
 // packages
 import { resolve } from 'url';
 import { match } from 'minimatch';
-import { getHooks } from 'html-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 // internal
@@ -43,7 +42,7 @@ class NetworkHints {
           compilation.errors.push(new UnsupportHtmlWebpackPluginVersionError());
         } else {
           // get available hooks directly
-          const hooks = getHooks(compilation);
+          const hooks = HtmlWebpackPlugin.getHooks(compilation);
 
           hooks.alterAssetTagGroups.tapAsync(
             'InjectExternalPlugin',
