@@ -6,7 +6,12 @@
 // packages
 import { resolve } from 'url';
 import { match } from 'minimatch';
-import { createPrefetchTags, createPreloadTags } from './tools';
+import { getHooks } from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+
+// internal
+import RequireHtmlWebpackPluginError from './exceptions/RequireHtmlWebpackPluginError';
+import UnsupportHtmlWebpackPluginVersionError from './exceptions/UnsupportHtmlWebpackPluginVersionError';
 import preloadAttrAlgorithm from './preload';
 
 // scope
@@ -21,42 +26,74 @@ class NetworkHints {
   }
 
   apply(compiler) {
-    compiler.hooks.compilation.tap('NetworkHints', (compilation) => {
-      compilation.hooks.htmlWebpackPluginAlterAssetTags.tapAsync(
-        'NetworkHints',
-        (html, callback) => {
-          const { publicPath } = compiler.options.output;
-          const assets = Reflect.ownKeys(compilation.assets);
-          const prefetch = this.options.prefetch
-            .reduce(
-              (acc, pattern) => [
-                ...acc,
-                ...match(assets, pattern, { matchBase: true }),
-              ],
-              []
-            )
-            .map((asset) => resolve(publicPath, asset))
-            .map((asset) => createPrefetchTags(asset));
-          const preload = this.options.preload
-            .reduce(
-              (acc, pattern) => [
-                ...acc,
-                ...match(assets, pattern, { matchBase: true }),
-              ],
-              []
-            )
-            .map((asset) => resolve(publicPath, asset))
-            .map((asset) => createPreloadTags(asset, preloadAttrAlgorithm));
+    compiler.hooks.compilation.tap(
+      'WebpackPluginNetworkHints',
+      (compilation) => {
+        const [HtmlWebpackPluginInstance] = compiler.options.plugins.filter(
+          (plugin) => plugin.constructor.name === 'HtmlWebpackPlugin'
+        );
 
-          const payload = {
-            ...html,
-            head: [...html.head, ...prefetch, ...preload],
-          };
-
-          callback(null, payload);
+        if (!HtmlWebpackPluginInstance) {
+          compilation.errors.push(new RequireHtmlWebpackPluginError());
         }
-      );
-    });
+        // pre-v4 HtmlWebpackPlugin
+        else if (
+          Reflect.has(compilation.hooks, 'htmlWebpackPluginAlterAssetTags')
+        ) {
+          compilation.errors.push(new UnsupportHtmlWebpackPluginVersionError());
+        } else {
+          // get available hooks directly
+          const hooks = getHooks(compilation);
+
+          hooks.alterAssetTagGroups.tapAsync(
+            'InjectExternalPlugin',
+            (assetTagGroups, callback) => {
+              const { publicPath } = compiler.options.output;
+              const assets = Reflect.ownKeys(compilation.assets);
+              const prefetch = this.options.prefetch
+                .reduce(
+                  (acc, pattern) => [
+                    ...acc,
+                    ...match(assets, pattern, { matchBase: true }),
+                  ],
+                  []
+                )
+                .sort()
+                .map((asset) => resolve(publicPath, asset))
+                .map((asset) =>
+                  HtmlWebpackPlugin.createHtmlTagObject('link', {
+                    rel: 'prefetch',
+                    href: asset,
+                  })
+                );
+              const preload = this.options.preload
+                .reduce(
+                  (acc, pattern) => [
+                    ...acc,
+                    ...match(assets, pattern, { matchBase: true }),
+                  ],
+                  []
+                )
+                .sort() // consistant assets order
+                .map((asset) => resolve(publicPath, asset))
+                .map((asset) =>
+                  HtmlWebpackPlugin.createHtmlTagObject(
+                    'link',
+                    preloadAttrAlgorithm(asset)
+                  )
+                );
+
+              const payload = {
+                ...assetTagGroups,
+                headTags: [...assetTagGroups.headTags, ...prefetch, ...preload],
+              };
+
+              callback(null, payload);
+            }
+          );
+        }
+      }
+    );
   }
 }
 

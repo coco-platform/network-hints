@@ -9,7 +9,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm-run-all -s compile",
-    "pretest": "yarn add html-webpack-plugin --peer",
+    "pretest": "yarn add html-webpack-plugin webpack --peer",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "precompile": "rm -rf lib",
@@ -68,8 +68,7 @@
     "memory-fs": "^0.4.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.0",
-    "pretty-quick": "^2.0.0",
-    "webpack": "^4.39.2"
+    "pretty-quick": "^2.0.0"
   },
   "dependencies": {
     "mime-types": "^2.1.24",
@@ -88,6 +87,7 @@
     }
   },
   "peerDependencies": {
-    "html-webpack-plugin": "^3.2.0"
+    "html-webpack-plugin": "^4.5.0",
+    "webpack": "^5.2.0"
   }
 }
